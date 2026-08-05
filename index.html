@@ -167,6 +167,7 @@
         }
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body class="text-dark">
 
@@ -556,6 +557,8 @@
         const trigger=e.target.closest('.open-any');
         if(trigger&&!trigger.closest('#formContainer')){e.preventDefault();openForm(trigger.dataset.source||'Website');}
     });
+
+    /* ===== SUBMIT: Leads details → WhatsApp + Google Sheets, Tracking → Faizeen style ===== */
     mainForm.addEventListener('submit',(e)=>{
         e.preventDefault();
         const name=document.getElementById('inp_name').value.trim();
@@ -564,9 +567,14 @@
         const gender=document.getElementById('inp_gender').value;
         const profession=document.getElementById('inp_profession').value;
         const source=sourceInfo.value||'Website';
-        if(!name||phone.length<10||!age||!gender||!profession){alert('Please fill all fields correctly with a valid 10-digit phone number.');return;}
 
-        /* Google Sheet */
+        /* Validation - Faizeen style (min 6 digits) */
+        if(!name||phone.length<6||!age||!gender||!profession){
+            alert('Please fill all fields correctly.');
+            return;
+        }
+
+        /* 1. Google Sheets - all lead details saved (Faizeen style fetch) */
         if(!SCRIPT_URL.includes('YOUR_SCRIPT_URL')){
             const formData=new FormData();
             formData.append('name',name);
@@ -576,17 +584,18 @@
             formData.append('profession',profession);
             formData.append('source',source);
             formData.append('timestamp',new Date().toISOString());
-            fetch(SCRIPT_URL,{method:'POST',body:formData,mode:'no-cors',keepalive:true}).catch(()=>{});
+            fetch(SCRIPT_URL,{method:'POST',body:formData,mode:'no-cors'}).catch(()=>{});
         }
 
-        /* Meta Pixel */
-        if(typeof fbq!=='undefined'){fbq('track','Contact');fbq('track','Lead');}
+        /* 2. Meta Pixel - Faizeen style: only Contact */
+        if(typeof fbq!=='undefined'){fbq('track','Contact');}
 
-        /* WhatsApp */
+        /* 3. WhatsApp - detailed message with all lead details */
         const msg=encodeURIComponent(`Hello Khushbu Patel! 👋\n\nI'm interested in your digital mentorship program. Here are my details:\n\nName: ${name}\nPhone: ${phone}\nAge: ${age}\nGender: ${gender}\nProfession: ${profession}\n\nPlease share next steps. Thank you! ✨`);
         window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
         closeForm();
     });
+
     document.addEventListener('keydown',(e)=>{
         if(e.key==='Escape'){closeForm();closePrivacy();}
     });
