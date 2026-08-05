@@ -8,7 +8,7 @@
     <!-- SEO -->
     <meta name="description" content="Join Khushbu Patel's digital mentorship program. Learn in-demand skills and start earning from your smartphone. Apply today!">
     <meta property="og:image" content="https://i.ibb.co/6cRtQdV9/Whats-App-Image-2026-08-05-at-2-49-17-PM.jpg">
-    <meta name="theme-color" content="#8B5CF6">
+    <meta name="theme-color" content="#B76E79">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,15 +40,15 @@
 
     <style>
         :root {
-            --lightest: #F3E8FF;
-            --light: #C4B5FD;
-            --primary: #8B5CF6;
-            --darkest: #581C87;
+            --lightest: #FFF8F5;
+            --light: #E8C4C4;
+            --primary: #B76E79;
+            --darkest: #4A1C2C;
             --white: #FFFFFF;
-            --shadow: 0 6px 20px rgba(139, 92, 246, .15);
-            --shadow-hover: 0 10px 30px rgba(139, 92, 246, .25);
-            --glow: 0 0 25px rgba(196, 181, 253, .5);
-            --glow-intense: 0 0 40px rgba(196, 181, 253, .7);
+            --shadow: 0 6px 20px rgba(183, 110, 121, .15);
+            --shadow-hover: 0 10px 30px rgba(183, 110, 121, .25);
+            --glow: 0 0 25px rgba(232, 196, 196, .5);
+            --glow-intense: 0 0 40px rgba(232, 196, 196, .7);
             --wa-green: #25D366;
             --wa-dark: #128C7E;
         }
@@ -65,22 +65,28 @@
         .glow-pulse { animation: pulseGlow 2.5s infinite; }
 
         @keyframes pulseGlow {
-            0%,100%{box-shadow:0 0 20px rgba(139, 92, 246, .4);}
-            50%{box-shadow:0 0 40px rgba(139, 92, 246, .8);}
+            0%,100%{box-shadow:0 0 20px rgba(183, 110, 121, .4);}
+            50%{box-shadow:0 0 40px rgba(183, 110, 121, .8);}
         }
 
         .open-any{
-            background:linear-gradient(135deg,var(--wa-green),var(--wa-dark)) !important;
+            background:linear-gradient(135deg,#C9A227,#D4AF37) !important;
             color:var(--white) !important;
             padding:.85rem 1.8rem;border-radius:50px;font-weight:800;border:none;
             display:inline-flex;align-items:center;gap:.5rem;
-            box-shadow:0 8px 20px rgba(37,211,102,.3);
+            box-shadow:0 8px 20px rgba(201,162,39,.35);
             cursor:pointer;transition:all .3s;text-decoration:none;font-size:1rem;white-space:nowrap;
             position:relative;overflow:hidden;
         }
+        .open-any::before{
+            content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);
+            transition:left .5s;
+        }
+        .open-any:hover::before{left:100%;}
         .open-any:hover{
             transform:translateY(-3px) scale(1.03);
-            box-shadow:0 0 40px rgba(37,211,102,.7),0 15px 30px rgba(37,211,102,.4);
+            box-shadow:0 0 40px rgba(201,162,39,.5),0 15px 30px rgba(201,162,39,.4);
         }
         .open-any:active{transform:translateY(0) scale(.98);}
 
@@ -116,13 +122,13 @@
         .accordion-button:not(.collapsed){background:linear-gradient(135deg,var(--lightest),var(--white));color:var(--primary);}
         .accordion-body{color:var(--darkest);}
 
-        .form-backdrop,.privacy-modal{position:fixed;inset:0;background:rgba(88,28,135,.8);backdrop-filter:blur(8px);z-index:9999;opacity:0;visibility:hidden;transition:all .4s;}
+        .form-backdrop,.privacy-modal{position:fixed;inset:0;background:rgba(74,28,44,.8);backdrop-filter:blur(8px);z-index:9999;opacity:0;visibility:hidden;transition:all .4s;}
         .form-backdrop.show,.privacy-modal.show{opacity:1;visibility:visible;}
-        #formContainer,#privacyContent{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);z-index:10000;max-width:500px;width:90%;max-height:85vh;opacity:0;visibility:hidden;transition:all .4s;background:var(--white);border:1px solid var(--primary);border-radius:15px;box-shadow:0 0 40px rgba(139,92,246,.3);}
+        #formContainer,#privacyContent{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);z-index:10000;max-width:500px;width:90%;max-height:85vh;opacity:0;visibility:hidden;transition:all .4s;background:var(--white);border:1px solid var(--primary);border-radius:15px;box-shadow:0 0 40px rgba(183,110,121,.3);}
         #formContainer.show,#privacyContent.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
-        .form-card{box-shadow:0 0 40px rgba(139,92,246,.3);border:1px solid var(--primary);}
+        .form-card{box-shadow:0 0 40px rgba(183,110,121,.3);border:1px solid var(--primary);}
         .form-control,.form-select{background: var(--lightest); border:2px solid var(--light);color:var(--darkest);border-radius:8px;padding:.6rem .9rem;transition:all .3s;}
-        .form-control:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(139,92,246,.15);}
+        .form-control:focus,.form-select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(183,110,121,.15);}
 
         /* Horizontal Scrolling Feedback */
         .feedback-viewport{overflow:hidden;margin:1.5rem 0;}
@@ -138,7 +144,7 @@
                        linear-gradient(135deg,var(--primary),var(--light)) border-box;
             transition:all .4s;
         }
-        .glow-border:hover{box-shadow:0 0 25px rgba(139,92,246,.4);transform:translateY(-3px);}
+        .glow-border:hover{box-shadow:0 0 25px rgba(225,29,72,.4);transform:translateY(-3px);}
 
         .stats-white{
             background:var(--white)!important;
@@ -406,7 +412,7 @@
                 <div class="col-md-4"><div class="glow-border text-dark p-3 rounded" style="background:var(--lightest);"><strong>💼 Profession:</strong> Current Status</div></div>
             </div>
             <p class="fs-6 fw-semibold mb-3" style="color:var(--primary);">📌 Save My Number: +91 75729 78395</p>
-            <button class="open-any glow-pulse mx-auto" data-source="Final CTA" style="background:var(--white)!important;color:var(--primary)!important;border:2px solid var(--primary);">📲 Apply Now – Free Consultation</button>
+            <button class="open-any glow-pulse mx-auto" data-source="Final CTA" style="background:linear-gradient(135deg,#C9A227,#D4AF37)!important;color:var(--white)!important;border:none;box-shadow:0 8px 20px rgba(201,162,39,.35);">📲 Apply Now – Free Consultation</button>
         </div>
         <div class="card border-0 p-3 mb-3 glow-border" style="background:rgba(255,255,255,.15);">
             <h4 class="h5 fw-bold mb-2">⏳ Within 24 hours:</h4>
