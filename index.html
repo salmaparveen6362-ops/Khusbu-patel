@@ -140,6 +140,7 @@
     </style>
 <base target="_blank">
 <base target="_blank">
+<base target="_blank">
 </head>
 <body class="text-dark">
 
@@ -535,6 +536,7 @@
         if(trigger&&!trigger.closest('#formContainer')){e.preventDefault();openForm(trigger.dataset.source||'Website');}
     });
 
+    /* ===== CONTACT TRACKING — Faizeen jaisa synchronous ===== */
     mainForm.addEventListener('submit',(e)=>{
         e.preventDefault();
         if(isSubmitting) return;
@@ -550,6 +552,7 @@
         isSubmitting = true;
         submitBtn.disabled = true;
         submitBtn.innerHTML = '⏳ Sending...';
+
         const formData=new FormData();
         formData.append('name',name);
         formData.append('phone',phone);
@@ -558,14 +561,18 @@
         formData.append('profession',profession);
         formData.append('source',sourceInfo.value||'Website');
         formData.append('timestamp',new Date().toISOString());
-        fetch(SCRIPT_URL,{method:'POST',body:formData,mode:'no-cors'})
-            .catch(()=>{})
-            .finally(()=>{
-                if(typeof fbq!=='undefined'){fbq('track','Contact');}
-                const msg=encodeURIComponent(`Hello Khushbu Patel! 👋\n\nI'm interested in your digital mentorship program. Here are my details:\n\nName: ${name}\nPhone: ${phone}\nAge: ${age}\nGender: ${gender}\nProfession: ${profession}\n\nPlease share next steps. Thank you! ✨`);
-                window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
-                closeForm();
-            });
+
+        /* Fire-and-forget Google Sheet — .finally() nahi, turant track karo */
+        fetch(SCRIPT_URL,{method:'POST',body:formData,mode:'no-cors'}).catch(()=>{});
+
+        /* Contact Event — turant fire, Faizeen jaisa */
+        if(typeof fbq!=='undefined'){fbq('track','Contact');}
+
+        /* WhatsApp open */
+        const msg=encodeURIComponent(`Hello Khushbu Patel! 👋\n\nI'm interested in your digital mentorship program. Here are my details:\n\nName: ${name}\nPhone: ${phone}\nAge: ${age}\nGender: ${gender}\nProfession: ${profession}\n\nPlease share next steps. Thank you! ✨`);
+        window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
+
+        closeForm();
     });
 
     document.addEventListener('keydown',(e)=>{
