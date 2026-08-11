@@ -14,6 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
+    <!-- Meta Pixel -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -138,7 +139,6 @@
             .feedback-track{animation:none !important;}
         }
     </style>
-<base target="_blank">
 <base target="_blank">
 <base target="_blank">
 </head>
@@ -459,7 +459,7 @@
                         </select>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="open-any w-100" id="submitBtn">📲 Send to WhatsApp</button>
+                        <button type="submit" class="open-any w-100">📲 Send to WhatsApp</button>
                     </div>
                 </div>
             </form>
@@ -472,8 +472,8 @@
     lucide.createIcons();
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYOUR_SCRIPT_URL_HERE/exec";
     const WA_NUMBER  = "919081303890";
-    let isSubmitting = false;
 
+    /* Counter animation */
     const counters=document.querySelectorAll('.counter');
     const counterObserver=new IntersectionObserver((entries)=>{
         entries.forEach(entry=>{
@@ -494,6 +494,7 @@
     },{threshold:0.3});
     counters.forEach(c=>counterObserver.observe(c));
 
+    /* Form & Privacy logic — EXACT Faizeen pattern */
     const formBackdrop=document.getElementById('formBackdrop');
     const formContainer=document.getElementById('formContainer');
     const mainForm=document.getElementById('mainForm');
@@ -502,7 +503,6 @@
     const privacyModal=document.getElementById('privacyModal');
     const privacyBtn=document.getElementById('privacyBtn');
     const closePrivacyBtn=document.getElementById('closePrivacyBtn');
-    const submitBtn=document.getElementById('submitBtn');
 
     function openForm(source='site'){
         sourceInfo.value=source;
@@ -515,9 +515,6 @@
         formContainer.classList.remove('show');
         document.body.style.overflow='';
         setTimeout(()=>mainForm.reset(),300);
-        isSubmitting = false;
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '📲 Send to WhatsApp';
     }
     function openPrivacy(){
         privacyModal.classList.add('show');
@@ -536,42 +533,40 @@
         if(trigger&&!trigger.closest('#formContainer')){e.preventDefault();openForm(trigger.dataset.source||'Website');}
     });
 
-    /* ===== CONTACT TRACKING — Faizeen jaisa synchronous ===== */
+    /* ===== SUBMIT — 100% Faizeen style synchronous flow ===== */
     mainForm.addEventListener('submit',(e)=>{
         e.preventDefault();
-        if(isSubmitting) return;
+
         const name=document.getElementById('inp_name').value.trim();
         const phone=document.getElementById('inp_phone').value.replace(/\D/g,'');
         const age=document.getElementById('inp_age').value;
         const gender=document.getElementById('inp_gender').value;
         const profession=document.getElementById('inp_profession').value;
+
         if(!name||phone.length<6||!age||!gender||!profession){
             alert('Please fill all fields correctly.');
             return;
         }
-        isSubmitting = true;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '⏳ Sending...';
 
+        /* 1. Fire-and-forget Google Sheet */
         const formData=new FormData();
         formData.append('name',name);
         formData.append('phone',phone);
         formData.append('age',age);
         formData.append('gender',gender);
         formData.append('profession',profession);
-        formData.append('source',sourceInfo.value||'Website');
+        formData.append('source',sourceInfo.value);
         formData.append('timestamp',new Date().toISOString());
-
-        /* Fire-and-forget Google Sheet — .finally() nahi, turant track karo */
         fetch(SCRIPT_URL,{method:'POST',body:formData,mode:'no-cors'}).catch(()=>{});
 
-        /* Contact Event — turant fire, Faizeen jaisa */
+        /* 2. Meta Contact Event (synchronous) */
         if(typeof fbq!=='undefined'){fbq('track','Contact');}
 
-        /* WhatsApp open */
+        /* 3. WhatsApp open (synchronous — popup blocker friendly) */
         const msg=encodeURIComponent(`Hello Khushbu Patel! 👋\n\nI'm interested in your digital mentorship program. Here are my details:\n\nName: ${name}\nPhone: ${phone}\nAge: ${age}\nGender: ${gender}\nProfession: ${profession}\n\nPlease share next steps. Thank you! ✨`);
         window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
 
+        /* 4. Close popup */
         closeForm();
     });
 
