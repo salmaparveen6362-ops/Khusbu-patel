@@ -533,7 +533,7 @@
         if(trigger&&!trigger.closest('#formContainer')){e.preventDefault();openForm(trigger.dataset.source||'Website');}
     });
 
-    /* ===== SUBMIT — 100% Faizeen style synchronous flow ===== */
+    /* ===== SUBMIT — 100% Faizeen style synchronous flow + Details to WhatsApp ===== */
     mainForm.addEventListener('submit',(e)=>{
         e.preventDefault();
 
@@ -562,7 +562,7 @@
         /* 2. Meta Contact Event (synchronous) */
         if(typeof fbq!=='undefined'){fbq('track','Contact');}
 
-        /* 3. WhatsApp open (synchronous — popup blocker friendly) */
+        /* 3. WhatsApp open with FILLED DETAILS (synchronous — popup blocker friendly) */
         const msg=encodeURIComponent(`Hello Khushbu Patel! 👋\n\nI'm interested in your digital mentorship program. Here are my details:\n\nName: ${name}\nPhone: ${phone}\nAge: ${age}\nGender: ${gender}\nProfession: ${profession}\n\nPlease share next steps. Thank you! ✨`);
         window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
 
